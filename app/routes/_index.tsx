@@ -8,7 +8,7 @@ export const meta: V2_MetaFunction = () => {
 // Loaders only run on the server and provide data
 // to your component on GET requests
 export const loader = async (args: LoaderArgs) => {
-  return Auth.loader(args);
+  return Auth.loader();
 };
 
 // Actions only run on the server and handle POST
