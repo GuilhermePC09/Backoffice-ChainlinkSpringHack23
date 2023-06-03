@@ -1,4 +1,4 @@
-export default function Form() {
+export default function TrackingPage() {
     return (
         <html lang="en">
         <head>
@@ -6,7 +6,7 @@ export default function Form() {
             <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <body>
-            <h1>Form Page</h1>
+            <h1>Tracking Page</h1>
         </body>
         </html>
     );
