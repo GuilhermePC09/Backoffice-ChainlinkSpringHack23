@@ -1,5 +1,6 @@
 import {authentication} from "~/functions/auth";
 import type { ActionArgs, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
 
 export const meta: V2_MetaFunction = () => [{ title: "stableshop • Buy Gift Cards using BTGUSD", description: "stableshop improves the usability of BTG Dol (a form of digital currency) into a payment product aimed at everyday use. Initially, a prepaid card structure called Gift Card will be developed to be used in digital stores. With this product, customers who wish to use BTG Dol for their purchases will be able to use our prepaid card wallet as a gift card. This solution will provide a convenient and affordable way for users to take advantage of BTG Dol in the context of everyday transactions." }];
 
@@ -23,7 +24,6 @@ export async function action({ request }: ActionArgs) {
 export default function Auth() {
     async function authenticate() {
         const auth = await authentication();
-        console.log(auth);
     }
 
     return (
@@ -33,7 +33,13 @@ export default function Auth() {
             <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <body>
-        <button onClick={authenticate}>Connect Wallet</button>
+        <button onClick={authenticate}>
+            <Link to={`/tracking_page`}>
+                <span className="relative text-black group-hover:text-white">
+                    Connect Wallet
+                </span>
+            </Link>
+        </button>
         </body>
         </html>
     );
