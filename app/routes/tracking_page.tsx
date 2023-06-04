@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
-import TrackMap from "~/routes/components/map";
+import TrackMap from "~/routes/components/Map";
 import {checkContracts} from "~/functions/checkContracts";
+import {Link} from "@remix-run/react";
 export default function TrackingPage() {
     async function testContract() {
         const hash = await checkContracts();
@@ -27,14 +28,20 @@ export default function TrackingPage() {
                     <p className="leading-relaxed mb-5 text-white text-xs">{cookieValue}</p>
 
 
-                    <p className="leading-relaxed mb-1 text-white text-sm">Select one order:</p>
+                    <p className="leading-relaxed mb-1 text-white text-m">Select one order:</p>
                     <select className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-5">
                         <option value="order1">Order 1</option>
                     </select>
+                    <p className="leading-relaxed mb-1 text-white text-sm">Sender:</p>
+                    <p className="leading-relaxed mb-5 text-white text-sm">Expected Arrival:</p>
                     <button
                         onClick={testContract}
+                        className="mb-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-white">
+                        Confirm delivery
+                    </button>
+                    <button
                         className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-white">
-                        Register receipt of delivery
+                        <Link to="/create_order_form"> Create order </Link>
                     </button>
                 </div>
             </div>

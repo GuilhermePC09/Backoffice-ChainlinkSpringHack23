@@ -49,10 +49,10 @@ export default function Auth() {
                 <div className="text-center text-4xl font-medium">Log In</div>
 
                 <button onClick={authenticate}
-                    className="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400"
+                    className="transform rounded-sm bg-indigo-500 py-2 duration-300 hover:bg-indigo-600"
                 >
                     <Link to={`/tracking_page`}>
-                    <span className="relative text-black group-hover:text-white">
+                    <span className="relative text-white">
                         Connect Wallet
                     </span>
                     </Link>

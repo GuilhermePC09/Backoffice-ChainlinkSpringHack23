@@ -1,9 +1,5 @@
 import {Link} from "@remix-run/react";
-import getLatLng from "../functions/get_LatLng";
 export default function CreateOrderForm() {
-    async function convertAddres() {
-
-    }
     return (
         <html lang="en">
             <head>
