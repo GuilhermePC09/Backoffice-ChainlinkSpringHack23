@@ -24,7 +24,7 @@ export default function TrackingPage() {
                     className="lg:w-1/3 md:w-1/2 bg-gray-900 text-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
 
                     <h2 className="text-gray-900 text-white mb-1 font-medium title-font">Wallet</h2>
-                    <p className="leading-relaxed mb-5 text-white text-sm">{cookieValue}</p>
+                    <p className="leading-relaxed mb-5 text-white text-xs">{cookieValue}</p>
 
 
                     <p className="leading-relaxed mb-1 text-white text-sm">Select one order:</p>
