@@ -8,13 +8,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.18.1",
     "@remix-run/css-bundle": "^1.16.0",
     "@remix-run/node": "^1.16.0",
     "@remix-run/react": "^1.16.0",
     "@remix-run/serve": "^1.16.0",
     "axios": "^1.4.0",
     "google": "^2.1.0",
-    "google-maps-react": "^2.0.6",
+    "google-maps": "^4.3.3",
     "isbot": "^3.6.8",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
