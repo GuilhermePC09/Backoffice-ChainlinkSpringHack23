@@ -1,8 +1,9 @@
 import {Link} from "@remix-run/react";
-import {meta} from "~/routes/auth";
-import React from "react";
-
+import getLatLng from "../functions/get_LatLng";
 export default function CreateOrderForm() {
+    async function convertAddres() {
+
+    }
     return (
         <html lang="en">
             <head>
