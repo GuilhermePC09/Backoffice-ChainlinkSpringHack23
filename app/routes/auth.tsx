@@ -42,13 +42,23 @@ export default function Auth() {
             <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <body>
-        <button onClick={authenticate}>
-            <Link to={`/tracking_page`}>
-                <span className="relative text-black group-hover:text-white">
-                    Connect Wallet
-                </span>
-            </Link>
-        </button>
+        <main
+            className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white"
+        >
+            <section className="flex w-[30rem] flex-col space-y-10">
+                <div className="text-center text-4xl font-medium">Log In</div>
+
+                <button onClick={authenticate}
+                    className="transform rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400"
+                >
+                    <Link to={`/tracking_page`}>
+                    <span className="relative text-black group-hover:text-white">
+                        Connect Wallet
+                    </span>
+                    </Link>
+                </button>
+            </section>
+        </main>
         </body>
         </html>
     );
