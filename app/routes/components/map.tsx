@@ -29,7 +29,7 @@ const WrappedMapContainer = GoogleApiWrapper({
 const TrackMap: React.FC = () => {
     return (
         <div>
-            <div style={{ width: '500px', height: '500px' }}>
+            <div className="map-container">
                 <WrappedMapContainer />
             </div>
         </div>
