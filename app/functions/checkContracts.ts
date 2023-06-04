@@ -2,6 +2,7 @@ import Web3 from 'web3';
 import Contract from 'web3-eth-contract';
 import { AbiItem } from 'web3-utils';
 import ERC20_ABI from '../contracts/ERC20_ABI.json';
+import Cookies from "js-cookie";
 
 
 export const checkContracts = async () => {
@@ -13,11 +14,11 @@ export const checkContracts = async () => {
     const web3 = new Web3(web3Provider);
     // connect to the library contract
 
-    let deliveryInstance
     const deliveryABI = ERC20_ABI as AbiItem[];
     const deliveryAddress = "0xab077Be2c042536bC2379Fc9D903A8EaC87d5969"
+    const wallet = Cookies.get("walletHash");
 
     let deliveryContract = new Contract(deliveryABI, deliveryAddress);
-    const balance = await deliveryContract.methods.balanceOf("0xa8b12dA103F6a313b3C0c6A2B1714eACA5102660").call();
+    const balance = await deliveryContract.methods.balanceOf(wallet).call();
     console.log(balance)
     }
