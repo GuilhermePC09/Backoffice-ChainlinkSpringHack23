@@ -1,6 +1,12 @@
 import Cookies from "js-cookie";
 import TrackMap from "~/routes/components/map";
+import {checkContracts} from "~/functions/checkContracts";
 export default function TrackingPage() {
+    async function testContract() {
+        const hash = await checkContracts();
+
+    }
+
     const cookieValue = Cookies.get("walletHash");
     return (
         <html lang="en">
@@ -27,6 +33,7 @@ export default function TrackingPage() {
                                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                     </div>
                     <button
+                        onClick={testContract}
                         className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button
                     </button>
                 </div>
