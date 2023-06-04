@@ -8,6 +8,7 @@ export const meta: V2_MetaFunction = () => [{ title: "stableshop • Buy Gift Ca
 // Loaders only run on the server and provide data
 // to your component on GET requests
 export const loader = async ({ request }: LoaderArgs) => {
+
     return null;
 };
 

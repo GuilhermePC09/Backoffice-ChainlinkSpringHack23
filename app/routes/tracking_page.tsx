@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import TrackMap from "~/routes/components/map";
 export default function TrackingPage() {
     const cookieValue = Cookies.get("walletHash");
 
@@ -9,7 +10,7 @@ export default function TrackingPage() {
             <meta name="viewport" content="width=device-width,initial-scale=1" />
         </head>
         <body>
-            <h1>{cookieValue}</h1>
+            <TrackMap />
         </body>
         </html>
     );
