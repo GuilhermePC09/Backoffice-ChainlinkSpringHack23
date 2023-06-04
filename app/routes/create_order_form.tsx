@@ -11,6 +11,11 @@ export default function CreateOrderForm() {
                     <div className="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
                         <h1 className="text-xl font-semibold">Create your order</h1>
                         <form className="mt-6">
+                            <label htmlFor="receiver-wallet"
+                                   className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Receiver Wallet</label>
+                            <input id="receiver-wallet" type="receiver-wallet" name="receiver-wallet"
+                                   className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                   required/>
                             <label htmlFor="sender-adress"
                                    className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Sender Address</label>
                             <input id="sender-adress" type="sender-adress" name="sender-address"
@@ -22,7 +27,12 @@ export default function CreateOrderForm() {
                             <input id="receiver-address" type="receiver-address" name="receiver-address"
                                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                    required/>
-                            <p className="text-xs">Ex: 1600 Amphitheatre Parkway, Mountain View, CA</p>
+                            <p className="text-xs mb-5">Ex: 1600 Amphitheatre Parkway, Mountain View, CA</p>
+                            <label htmlFor="estimated-delivery-date"
+                                   className="block mt-2 text-xs font-semibold text-gray-600 uppercase">Estimated Delivery Date</label>
+                            <input id="estimated-delivery-date" type="date" name="estimated-delivery-date"
+                                   className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                   required/>
                             <button type="submit"
                                     className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                                 Create
