@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import Contract from "web3-eth-contract";
-import ERC20_ABI from "~/contracts/ERC20_ABI.json";
+import delivery from "~/contracts/delivery.json";
 import {AbiItem} from "web3-utils";
 import BlockChainConfigDto from "~/functions/dtos/blockChainConfig.dto";
 
@@ -13,8 +13,8 @@ export default async function initializeBlockchain(): Promise<BlockChainConfigDt
     const web3 = new Web3(web3Provider);
     // connect to the library contract
 
-    const deliveryABI = ERC20_ABI as AbiItem[];
-    const deliveryAddress = "0xab077Be2c042536bC2379Fc9D903A8EaC87d5969"
+    const deliveryABI = delivery as AbiItem[];
+    const deliveryAddress = "0xcCc9435162B8244e25be757B38D718aeC4d3C570"
 
     const response: BlockChainConfigDto = {
         web3Provider,
