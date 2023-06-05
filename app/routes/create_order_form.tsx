@@ -1,5 +1,16 @@
 import {Link} from "@remix-run/react";
+import Cookies from "js-cookie";
 export default function CreateOrderForm() {
+    const cookieValue = Cookies.get("walletHash");
+    if (!cookieValue) {
+        return (
+            <>
+                <meta httpEquiv="refresh" content="0; url=/auth" />
+                <p>Redirecionando para a página de autenticação...</p>
+            </>
+        );
+    }
+
     return (
         <html lang="en">
             <head>

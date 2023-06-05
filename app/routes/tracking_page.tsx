@@ -1,14 +1,22 @@
 import Cookies from "js-cookie";
 import TrackMap from "~/routes/components/Map";
 import {checkContracts} from "~/functions/checkContracts";
-import {Link} from "@remix-run/react";
+import { Link} from "@remix-run/react";
 export default function TrackingPage() {
+    const cookieValue = Cookies.get("walletHash");
+    if (!cookieValue) {
+        return (
+            <>
+                <meta httpEquiv="refresh" content="0; url=/auth" />
+                <p>Redirecionando para a página de autenticação...</p>
+            </>
+        );
+    }
     async function testContract() {
         const hash = await checkContracts();
 
     }
 
-    const cookieValue = Cookies.get("walletHash");
     return (
         <html lang="en">
         <head>
