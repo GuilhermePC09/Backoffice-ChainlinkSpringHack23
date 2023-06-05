@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import Contract from "web3-eth-contract";
+import order from "~/contracts/order.json";
 import delivery from "~/contracts/delivery.json";
 import {AbiItem} from "web3-utils";
 import BlockChainConfigDto from "~/functions/dtos/blockChainConfig.dto";
@@ -16,13 +17,16 @@ export default async function initializeBlockchain(): Promise<BlockChainConfigDt
     const deliveryABI = delivery as AbiItem[];
     const deliveryAddress = "0xcCc9435162B8244e25be757B38D718aeC4d3C570"
 
-    const response: BlockChainConfigDto = {
+    const orderABI = order as AbiItem[];
+    const orderAddress = "0x0f3a3Bc2b56AD73EeD6b574bAE99bfeA83606564"
+
+    return {
         web3Provider,
         web3,
         deliveryABI,
         deliveryAddress,
+        orderABI,
+        orderAddress,
     };
-
-    return response;
 
 }

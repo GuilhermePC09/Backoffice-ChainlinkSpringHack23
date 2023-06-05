@@ -6,4 +6,6 @@ export default interface BlockChainConfigDto {
     web3: Web3,
     deliveryABI: AbiItem[],
     deliveryAddress: string,
+    orderABI: AbiItem[],
+    orderAddress: string,
 }
