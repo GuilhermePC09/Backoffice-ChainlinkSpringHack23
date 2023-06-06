@@ -1,49 +1,54 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { useContext } from 'react';
+import { GoogleMap, Polyline, useJsApiLoader } from '@react-google-maps/api';
+import { MyContext} from '~/routes/context/context_provider';
 
 const containerStyle = {
     width: '100vw',
-    height: '100vh'
+    height: '100vh',
 };
 
-const center = {
-    lat: -3.745,
-    lng: -38.523
-};
-
-function TrackMap() {
+export default function TrackMap() {
+    const path = useContext(MyContext);
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyDM9y8YCKfW_v0j0iBvPHe9bOyZFtkB1DU"
-    })
+        googleMapsApiKey: 'AIzaSyDM9y8YCKfW_v0j0iBvPHe9bOyZFtkB1DU',
+    });
+    const options = {
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        clickable: false,
+        draggable: false,
+        editable: false,
+        visible: true,
+        radius: 30000,
+        zIndex: 1,
+    };
 
-    const [map, setMap] = React.useState(null)
+    const center = { lat: -27.467, lng: 153.027 };
+
+    const [map, setMap] = React.useState(null);
 
     // @ts-ignore
     const onLoad = React.useCallback(function callback(map) {
-        // This is just an example of getting and using the map instance!!! don't just blindly copy!
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);
-
-        setMap(map)
-    }, [])
+        setMap(map);
+    }, []);
 
     const onUnmount = React.useCallback(function callback() {
-        setMap(null)
-    }, [])
+        setMap(null);
+    }, []);
 
-    return isLoaded ? (
-        <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={10}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-        >
-            { /* Child components, such as markers, info windows, etc. */ }
-            <></>
+    if (!isLoaded) {
+        return null;
+    }
+
+    return (
+        <GoogleMap mapContainerStyle={containerStyle} center={center} onLoad={onLoad} onUnmount={onUnmount}>
+            {path && <Polyline path={path} options={options} />}
         </GoogleMap>
-    ) : <></>
+    );
 }
-
-export default React.memo(TrackMap)

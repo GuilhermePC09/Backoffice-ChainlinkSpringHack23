@@ -2,6 +2,7 @@ import {Link, useLocation} from "@remix-run/react";
 import Cookies from "js-cookie";
 import React, {useEffect, useState} from "react";
 import createOrder from "~/functions/create_order";
+import trackingInfo from "~/functions/tracking_info";
 export default function CreateOrderForm() {
     const { pathname } = useLocation();
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
@@ -22,7 +23,6 @@ export default function CreateOrderForm() {
     }
 
     async function handleSubmit(event: any) {
-        console.log("Chegou aqui")
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
@@ -38,6 +38,7 @@ export default function CreateOrderForm() {
             setApiResponse(JSON.stringify(error));
         }
     }
+
 
     return (
         <html lang="en">
