@@ -5,6 +5,7 @@ import { Link, useLocation } from "@remix-run/react";
 import trackingInfo from "~/functions/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import {MyContextProvider} from "~/routes/context/context_provider";
+import {checkContracts} from "~/functions/checkContracts";
 
 export default function TrackingPage() {
     const [trackingInfoDto, setTrackingInfoDto] = useState<TrackingInfoDto>({
@@ -19,6 +20,7 @@ export default function TrackingPage() {
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
 
     useEffect(() => {
+        checkContracts();
         setCookieValue(Cookies.get("walletHash"));
     }, [pathname]);
 
