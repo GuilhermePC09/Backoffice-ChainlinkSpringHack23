@@ -7,6 +7,11 @@ const containerStyle = {
     height: '100vh',
 };
 
+export type Path={
+    lat: number;
+    lng: number;
+}
+
 export default function TrackMap() {
     const path = useContext(MyContext);
     const { isLoaded } = useJsApiLoader({

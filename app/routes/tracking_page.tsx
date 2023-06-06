@@ -13,7 +13,8 @@ export default function TrackingPage() {
     });
     const [showInfo, setShowInfo] = useState(false);
     const { pathname } = useLocation();
-    const path: Path[] = [{ lat: 2, lng: 3 }];
+    const [path, setPath] = useState<Path[]>([]);
+
 
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
 
@@ -32,9 +33,16 @@ export default function TrackingPage() {
     }
 
     async function orderPath() {
+        const path = [
+            {lat: 37.772, lng: -122.214},
+            {lat: 21.291, lng: -157.821},
+            {lat: -18.142, lng: 178.431},
+            {lat: -27.467, lng: 153.027}
+        ];
         const info = await trackingInfo();
         console.log(info);
         setTrackingInfoDto(info);
+        setPath(path)
         setShowInfo(true);
     }
 
