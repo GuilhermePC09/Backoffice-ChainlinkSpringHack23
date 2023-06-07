@@ -17,8 +17,8 @@ export default async function initializeBlockchain(): Promise<BlockChainConfigDt
     const deliveryABI = delivery as AbiItem[];
     const deliveryAddress = "0xD780fC41baC8F8BC62F5c36a04556c4d79812A10"
 
-    const orderABI = order as AbiItem[];
-    const orderAddress = "0x0f3a3Bc2b56AD73EeD6b574bAE99bfeA83606564"
+    // const orderABI = order as AbiItem[];
+    // const orderAddress = "0x0f3a3Bc2b56AD73EeD6b574bAE99bfeA83606564"
 
     return {
         web3Provider,

@@ -15,12 +15,20 @@ export default function TrackingPage() {
     const [showInfo, setShowInfo] = useState(false);
     const { pathname } = useLocation();
     const [path, setPath] = useState<Path[]>([]);
+    const [orderList, setOrderList] = useState<any>([]);
+    const [selectedOrder, setSelectedOrder] = useState("");
 
 
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
 
     useEffect(() => {
-        checkContracts();
+        const fetchData = async () => {
+            const orders = await checkContracts();
+            console.log(orders);
+            setOrderList(orders);
+        };
+
+        fetchData();
         setCookieValue(Cookies.get("walletHash"));
     }, [pathname]);
 
@@ -41,11 +49,18 @@ export default function TrackingPage() {
             {lat: -18.142, lng: 178.431},
             {lat: -27.467, lng: 153.027}
         ];
-        const info = await trackingInfo();
+        const info = await trackingInfo(selectedOrder);
         console.log(info);
         setTrackingInfoDto(info);
         setPath(path)
         setShowInfo(true);
+    }
+
+    function handleOrderChange(event) {
+        orderPath()
+        const selectedValue = event.target.value;
+        console.log(selectedValue)
+        setSelectedOrder(selectedValue);
     }
 
     return (
@@ -66,21 +81,25 @@ export default function TrackingPage() {
                     <h2 className="text-gray-900 text-white mb-1 font-medium title-font">
                         Wallet
                     </h2>
-                    <p className="leading-relaxed mb-5 text-white text-xs">
+                    <p className="leading-relaxed mb-5 text-white text-sm">
                         {cookieValue}
+                    </p>
+                    <p className="leading-relaxed mb-1 text-white text-sm">
+                        Order: {selectedOrder}
                     </p>
                     <p className="leading-relaxed mb-1 text-white text-m">
                         Select one order:
                     </p>
-                    <select className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
-                        <option value="order1">Order 1</option>
+                    <select
+                        value={selectedOrder}
+                        onChange={handleOrderChange}
+                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
+                        {orderList.map((order, index) => (
+                            <option key={index} value={order}>
+                                {order}
+                            </option>
+                        ))}
                     </select>
-                    <button
-                        onClick={orderPath}
-                        className="mb-5 text-white bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-white"
-                    >
-                        Show order path
-                    </button>
                     {showInfo ? (
                         <>
                             <p className="leading-relaxed mb-1 text-white text-sm">
@@ -93,14 +112,19 @@ export default function TrackingPage() {
                     ) : (
                         <>
                             <p className="leading-relaxed mb-1 text-white text-sm">
-                                Sender:
+                                Sender: {trackingInfoDto.sender}
                             </p>
                             <p className="leading-relaxed mb-5 text-white text-sm">
-                                Expected Arrival:
+                                Expected Arrival: {trackingInfoDto.expectedDeliveryDate}
                             </p>
                         </>
                     )}
-
+                    <button
+                        onClick={orderPath}
+                        className="mb-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-white"
+                    >
+                        Show order path
+                    </button>
                     <button
                         className="mb-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-white"
                     >

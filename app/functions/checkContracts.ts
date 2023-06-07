@@ -10,6 +10,6 @@ export const checkContracts = async () => {
     const wallet = Cookies.get("walletHash");
 
     let deliveryContract = new Contract(config.deliveryABI, config.deliveryAddress);
-    const orders = await deliveryContract.methods.orders(wallet).call();
-    console.log(orders);
+
+    return await deliveryContract.methods.getReceiverOrders(wallet).call();
     }
