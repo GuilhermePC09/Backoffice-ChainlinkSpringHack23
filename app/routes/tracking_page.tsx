@@ -91,28 +91,20 @@ export default function TrackingPage() {
                     <p className="leading-relaxed mb-5 text-white text-sm">
                         {cookieValue}
                     </p>
-                    <p className="leading-relaxed mb-1 text-white text-sm">
-                        Order: {selectedOrder}
-                    </p>
-                    <p className="leading-relaxed mb-1 text-white text-m">
-                        Select one Orders to Receive:
-                    </p>
                     <select
                         onChange={handleOrderChange}
-                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
-                        <span>Orders to receive</span>
+                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100 text-black">
+                        <option value="">Select one Receiving Order</option>
                         {receiverOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
                             </option>
                         ))}
                     </select>
-                    <p className="leading-relaxed mb-1 text-white text-m">
-                        Select one Sent Order:
-                    </p>
                     <select
                         onChange={handleOrderChange}
-                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
+                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100 text-black">
+                        <option value="">Select one Sent Order</option>
                         {senderOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
