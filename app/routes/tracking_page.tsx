@@ -5,7 +5,7 @@ import { Link, useLocation } from "@remix-run/react";
 import trackingInfo from "~/functions/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import {MyContextProvider} from "~/routes/context/context_provider";
-import {checkContracts} from "~/functions/checkContracts";
+import {checkReceiverOrders, checkSenderOrders} from "~/functions/checkReceiverOrders";
 
 export default function TrackingPage() {
     const [trackingInfoDto, setTrackingInfoDto] = useState<TrackingInfoDto>({
@@ -15,17 +15,19 @@ export default function TrackingPage() {
     const [showInfo, setShowInfo] = useState(false);
     const { pathname } = useLocation();
     const [path, setPath] = useState<Path[]>([]);
-    const [orderList, setOrderList] = useState<any>([]);
+    const [receiverOrderList, setReceiverOrderList] = useState<any>([]);
     const [selectedOrder, setSelectedOrder] = useState("");
-
+    const [senderOrderList, setSenderOrderList] = useState<any>([]);
 
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
 
     useEffect(() => {
         const fetchData = async () => {
-            const orders = await checkContracts();
-            console.log(orders);
-            setOrderList(orders);
+            const receiverOrders = await checkReceiverOrders();
+            setReceiverOrderList(receiverOrders);
+
+            const senderOrders = await checkSenderOrders();
+            setSenderOrderList(senderOrders);
         };
 
         fetchData();
@@ -88,13 +90,26 @@ export default function TrackingPage() {
                         Order: {selectedOrder}
                     </p>
                     <p className="leading-relaxed mb-1 text-white text-m">
-                        Select one order:
+                        Select one Orders to Receive:
                     </p>
                     <select
-                        value={selectedOrder}
                         onChange={handleOrderChange}
                         className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
-                        {orderList.map((order, index) => (
+                        <span>Orders to receive</span>
+                        {receiverOrderList.map((order, index) => (
+                            <option key={index} value={order}>
+                                {order}
+                            </option>
+                        ))}
+                    </select>
+                    <p className="leading-relaxed mb-1 text-white text-m">
+                        Select one Orders to Receive:
+                    </p>
+                    <select
+                        onChange={handleOrderChange}
+                        className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
+                        <span>Sent Orders</span>
+                        {senderOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
                             </option>
