@@ -6,6 +6,7 @@ import trackingInfo from "~/functions/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import {MyContextProvider} from "~/routes/context/context_provider";
 import {checkReceiverOrders, checkSenderOrders} from "~/functions/checkReceiverOrders";
+import {confirmOrderDelivery} from "~/functions/confirm_delivery";
 
 export default function TrackingPage() {
     const [trackingInfoDto, setTrackingInfoDto] = useState<TrackingInfoDto>({
@@ -58,8 +59,12 @@ export default function TrackingPage() {
         setShowInfo(true);
     }
 
+    async function confirmDelivery() {
+        const confirmation = await confirmOrderDelivery(selectedOrder);
+        console.log(confirmation)
+    }
+
     function handleOrderChange(event) {
-        orderPath()
         const selectedValue = event.target.value;
         console.log(selectedValue)
         setSelectedOrder(selectedValue);
@@ -103,12 +108,11 @@ export default function TrackingPage() {
                         ))}
                     </select>
                     <p className="leading-relaxed mb-1 text-white text-m">
-                        Select one Orders to Receive:
+                        Select one Sent Order:
                     </p>
                     <select
                         onChange={handleOrderChange}
                         className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100">
-                        <span>Sent Orders</span>
                         {senderOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
@@ -141,6 +145,7 @@ export default function TrackingPage() {
                         Show order path
                     </button>
                     <button
+                        onClick={confirmDelivery}
                         className="mb-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-white"
                     >
                         Confirm delivery
