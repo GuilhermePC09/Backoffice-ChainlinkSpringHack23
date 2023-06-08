@@ -1,11 +1,10 @@
-import {authentication} from "~/functions/contracts/auth";
 import type { ActionArgs, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import Cookies from "js-cookie";
-import {useState} from "react";
-import {redirect} from "@remix-run/node";
+import { useState } from "react";
+import { authentication } from "~/functions/contracts/auth";
 
-export const meta: V2_MetaFunction = () => [{ title: "stableshop • Buy Gift Cards using BTGUSD", description: "stableshop improves the usability of BTG Dol (a form of digital currency) into a payment product aimed at everyday use. Initially, a prepaid card structure called Gift Card will be developed to be used in digital stores. With this product, customers who wish to use BTG Dol for their purchases will be able to use our prepaid card wallet as a gift card. This solution will provide a convenient and affordable way for users to take advantage of BTG Dol in the context of everyday transactions." }];
+export const meta: V2_MetaFunction = () => [{ title: "shipchain • Track and automate deliveries all around the world", description: "Automate the shipping process of delivering any kind of package in the real world. The smart contract gathers location data from IoT devices and stores it in the blockchain." }];
 
 // Loaders only run on the server and provide data
 // to your component on GET requests
@@ -42,33 +41,33 @@ export default function Auth() {
 
     return (
         <html lang="en">
-        <head>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="width=device-width,initial-scale=1" />
-        </head>
-        <body>
-        <main
-            className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white"
-        >
-            <section className="flex w-[30rem] flex-col space-y-10">
-                <div className="text-center text-4xl font-medium">Log In</div>
+            <head>
+                <meta charSet="utf-8" />
+                <meta name="viewport" content="width=device-width,initial-scale=1" />
+            </head>
+            <body>
+                <main
+                    className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white"
+                >
+                    <section className="flex w-[30rem] flex-col space-y-10">
+                        <div className="text-center text-4xl font-medium">Log In</div>
 
-                <button onClick={authenticate} className="transform rounded-sm bg-indigo-500 py-2 duration-300 hover:bg-indigo-600">
-                    {authenticated ? (
-                        <Link to={`/tracking_page`}>
-                              <span className="relative text-white">
-                                Go to your orders
-                              </span>
-                        </Link>
-                                ) : (
+                        <button onClick={authenticate} className="transform rounded-sm bg-indigo-500 py-2 duration-300 hover:bg-indigo-600">
+                            {authenticated ? (
+                                <Link to={`/tracking_page`}>
                                     <span className="relative text-white">
-                                        Connect Wallet
+                                        Go to your orders
                                     </span>
-                                )}
-                </button>
-            </section>
-        </main>
-        </body>
+                                </Link>
+                            ) : (
+                                <span className="relative text-white">
+                                    Connect Wallet
+                                </span>
+                            )}
+                        </button>
+                    </section>
+                </main>
+            </body>
         </html>
     );
 }
