@@ -22,9 +22,9 @@ export default async function createOrder(receiverWallet: string, senderAddress:
     try {
         const result = await deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)
             .send({ from: wallet })
-            .then(function (lastOrder: object) {
+            .then(function (createdOrder: any) {
                 // will be fired once the receipt is mined
-                console.log('then', lastOrder);
+                console.log('then', createdOrder.blockHash);
             });
     } catch (error) {
         console.log('error', error);
