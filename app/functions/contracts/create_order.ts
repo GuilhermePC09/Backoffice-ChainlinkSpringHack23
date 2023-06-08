@@ -2,6 +2,8 @@ import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import Cookies from "js-cookie";
 import Contract from "web3-eth-contract";
 import getLatLng from "~/functions/contracts/get_LatLng";
+import {createIotOrder} from "~/functions/Iot_client/iotClient";
+import {CreateIotOrderDto} from "~/functions/dtos/iotClient.dto";
 
 export default async function createOrder(receiverWallet: string, senderAddress: string, receiverAddress: string, expectedTimeOfArrival: string) {
     const config = await initializeBlockchain();
@@ -23,8 +25,18 @@ export default async function createOrder(receiverWallet: string, senderAddress:
         const result = await deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)
             .send({ from: wallet })
             .then(function (createdOrder: any) {
-                // will be fired once the receipt is mined
-                console.log('then', createdOrder.blockHash);
+                const orderID:string = createdOrder.blockHash
+                const iotOrder:CreateIotOrderDto ={
+                    id: createdOrder.blockHash,
+                    senderWallet: wallet,
+                    receiverWallet: receiverWallet,
+                    senderAddress: senderAddress,
+                    receiverAddress: receiverAddress,
+                    expectedTime: date,
+                }
+                const iotReturn = createIotOrder(iotOrder);
+
+                console.log('then', iotReturn);
             });
     } catch (error) {
         console.log('error', error);

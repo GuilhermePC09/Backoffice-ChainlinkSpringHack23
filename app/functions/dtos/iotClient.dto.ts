@@ -1,6 +1,6 @@
-export interface CreateOrderDto {
+export interface CreateIotOrderDto {
     id: string;
-    senderWallet: string;
+    senderWallet: string | undefined;
     receiverWallet: string;
     senderAddress: string;
     receiverAddress: string;

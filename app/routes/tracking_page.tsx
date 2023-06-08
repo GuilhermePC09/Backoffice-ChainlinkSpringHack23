@@ -7,6 +7,7 @@ import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import {MyContextProvider} from "~/routes/context/context_provider";
 import {check_orders, checkSenderOrders} from "~/functions/contracts/check_orders";
 import {confirmOrderDelivery} from "~/functions/contracts/confirm_delivery";
+import {getLocations} from "~/functions/Iot_client/iotClient";
 
 export default function TrackingPage() {
     const [trackingInfoDto, setTrackingInfoDto] = useState<TrackingInfoDto>({
@@ -46,12 +47,7 @@ export default function TrackingPage() {
     }
 
     async function orderPath() {
-        const path = [
-            {lat: 37.772, lng: -122.214},
-            {lat: 21.291, lng: -157.821},
-            {lat: -18.142, lng: 178.431},
-            {lat: -27.467, lng: 153.027}
-        ];
+        const path:Path[] = await getLocations(selectedOrder)
         const info = await trackingInfo(selectedOrder);
         console.log(info);
         setTrackingInfoDto(info);

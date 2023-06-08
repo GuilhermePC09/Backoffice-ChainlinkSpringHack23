@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import React, {useEffect, useState} from "react";
 import createOrder from "~/functions/contracts/create_order";
 import trackingInfo from "~/functions/contracts/tracking_info";
+import {CreateIotOrderDto} from "~/functions/dtos/iotClient.dto";
 export default function CreateOrderForm() {
     const { pathname } = useLocation();
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
@@ -33,6 +34,7 @@ export default function CreateOrderForm() {
 
         try {
             const response = await createOrder(receiverWallet, senderAdress, receiverAdress, estimatedDeliveryDate);
+
         } catch (error) {
             console.log("err", error)
             setApiResponse(JSON.stringify(error));
