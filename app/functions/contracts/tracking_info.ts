@@ -1,4 +1,4 @@
-import initializeBlockchain from "~/functions/initialize_blockchain";
+import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import Contract from "web3-eth-contract";
 import Cookies from "js-cookie";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";

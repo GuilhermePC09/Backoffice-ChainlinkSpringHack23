@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import TrackMap, {Path} from "~/routes/components/Map";
 import { Link, useLocation } from "@remix-run/react";
-import trackingInfo from "~/functions/tracking_info";
+import trackingInfo from "~/functions/contracts/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import {MyContextProvider} from "~/routes/context/context_provider";
-import {checkReceiverOrders, checkSenderOrders} from "~/functions/checkReceiverOrders";
-import {confirmOrderDelivery} from "~/functions/confirm_delivery";
+import {check_orders, checkSenderOrders} from "~/functions/contracts/check_orders";
+import {confirmOrderDelivery} from "~/functions/contracts/confirm_delivery";
 
 export default function TrackingPage() {
     const [trackingInfoDto, setTrackingInfoDto] = useState<TrackingInfoDto>({
@@ -24,7 +24,7 @@ export default function TrackingPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const receiverOrders = await checkReceiverOrders();
+            const receiverOrders = await check_orders();
             setReceiverOrderList(receiverOrders);
 
             const senderOrders = await checkSenderOrders();
@@ -64,12 +64,14 @@ export default function TrackingPage() {
         console.log(confirmation)
     }
 
+    // @ts-ignore
     function handleOrderChange(event) {
         const selectedValue = event.target.value;
         console.log(selectedValue)
         setSelectedOrder(selectedValue);
     }
 
+    // @ts-ignore
     return (
         <html lang="en">
         <head>
@@ -95,7 +97,8 @@ export default function TrackingPage() {
                         onChange={handleOrderChange}
                         className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100 text-black">
                         <option value="">Select one Receiving Order</option>
-                        {receiverOrderList.map((order, index) => (
+                        { // @ts-ignore
+                            receiverOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
                             </option>
@@ -105,7 +108,8 @@ export default function TrackingPage() {
                         onChange={handleOrderChange}
                         className="rounded-t-md rounded-b-md rounded-l-md rounded-r-md border-4 mb-2 w-100 text-black">
                         <option value="">Select one Sent Order</option>
-                        {senderOrderList.map((order, index) => (
+                        { // @ts-ignore
+                            senderOrderList.map((order, index) => (
                             <option key={index} value={order}>
                                 {order}
                             </option>

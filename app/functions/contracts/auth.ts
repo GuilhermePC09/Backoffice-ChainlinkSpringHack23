@@ -1,4 +1,4 @@
-import initializeBlockchain from "~/functions/initialize_blockchain";
+import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 
 export async function authentication(): Promise<string> {
     const config = await initializeBlockchain();

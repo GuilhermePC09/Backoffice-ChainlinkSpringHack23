@@ -1,8 +1,8 @@
 import {Link, useLocation} from "@remix-run/react";
 import Cookies from "js-cookie";
 import React, {useEffect, useState} from "react";
-import createOrder from "~/functions/create_order";
-import trackingInfo from "~/functions/tracking_info";
+import createOrder from "~/functions/contracts/create_order";
+import trackingInfo from "~/functions/contracts/tracking_info";
 export default function CreateOrderForm() {
     const { pathname } = useLocation();
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));

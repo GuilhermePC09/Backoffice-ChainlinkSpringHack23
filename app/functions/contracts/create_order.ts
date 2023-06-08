@@ -1,10 +1,9 @@
-import initializeBlockchain from "~/functions/initialize_blockchain";
+import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import Cookies from "js-cookie";
 import Contract from "web3-eth-contract";
-import getLatLng from "~/functions/get_LatLng";
+import getLatLng from "~/functions/contracts/get_LatLng";
 
 export default async function createOrder(receiverWallet: string, senderAddress: string, receiverAddress: string, expectedTimeOfArrival: string) {
-    console.log('createOrder', receiverWallet, senderAddress, receiverAddress, expectedTimeOfArrival);
     const config = await initializeBlockchain();
     const wallet = Cookies.get("walletHash");
     let deliveryContract = new Contract(config.deliveryABI, config.deliveryAddress);
@@ -17,10 +16,8 @@ export default async function createOrder(receiverWallet: string, senderAddress:
     const destLat = Math.floor(latLngReceiver.latitude * 1000000);
     const destLng = Math.floor(latLngReceiver.longitude * 1000000);
 
-    console.log(expectedTimeOfArrival)
     const date = new Date(expectedTimeOfArrival);
     const timestampInSeconds = Math.floor(date.getTime() / 1000);
-    console.log(srcLat, srcLng, destLat, destLng, timestampInSeconds)
     deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)
     try {
         const result = await deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)

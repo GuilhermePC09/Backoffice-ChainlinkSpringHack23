@@ -1,4 +1,4 @@
-import {authentication} from "~/functions/auth";
+import {authentication} from "~/functions/contracts/auth";
 import type { ActionArgs, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import Cookies from "js-cookie";
