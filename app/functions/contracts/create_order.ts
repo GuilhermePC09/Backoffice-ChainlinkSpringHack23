@@ -32,6 +32,8 @@ export default async function createOrder(receiverWallet: string, senderAddress:
                     receiverWallet: receiverWallet,
                     senderAddress: senderAddress,
                     receiverAddress: receiverAddress,
+                    receiverAddrLat: destLat,
+                    receiverAddrLng: destLng,
                     expectedTime: date,
                 }
                 const iotReturn = createIotOrder(iotOrder);

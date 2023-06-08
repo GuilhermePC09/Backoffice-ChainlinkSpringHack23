@@ -5,4 +5,6 @@ export interface CreateIotOrderDto {
     senderAddress: string;
     receiverAddress: string;
     expectedTime: Date;
+    receiverAddrLat: number,
+    receiverAddrLng: number
 }
