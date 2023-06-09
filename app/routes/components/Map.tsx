@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { GoogleMap, Polyline, useJsApiLoader } from '@react-google-maps/api';
+import {GoogleMap, Marker, Polyline, useJsApiLoader} from '@react-google-maps/api';
 import { MyContext} from '~/routes/context/context_provider';
 
 const containerStyle = {
@@ -32,7 +32,15 @@ export default function TrackMap() {
         zIndex: 1,
     };
 
-    const center = { lat: -27.467, lng: 153.027 };
+    let center: Path
+
+    if (path) {
+        const centerIndex = path.length - 1;
+        center = path[centerIndex];
+    }
+    else{
+        center = { lat: 0, lng: 0}
+    }
 
     const [map, setMap] = React.useState(null);
 
@@ -53,6 +61,7 @@ export default function TrackMap() {
 
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={center} onLoad={onLoad} onUnmount={onUnmount}>
+            {path && <Marker position={center} />}
             {path && <Polyline path={path} options={options} />}
         </GoogleMap>
     );
