@@ -40,7 +40,7 @@ export default function TrackingPage() {
         return (
             <html>
             <head>
-                <meta http-equiv="refresh" content="0; url=/auth" />
+                <meta content="0; url=/auth" />
             </head>
             </html>
         );
