@@ -2,10 +2,15 @@ import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import Cookies from "js-cookie";
 import Contract from "web3-eth-contract";
 import getLatLng from "~/functions/contracts/get_LatLng";
-import {createIotOrder} from "~/functions/Iot_client/iotClient";
-import {CreateIotOrderDto} from "~/functions/dtos/iotClient.dto";
+import { createIotOrder } from "~/functions/Iot_client/iotClient";
+import { CreateIotOrderDto } from "~/functions/dtos/iotClient.dto";
 
-export default async function createOrder(receiverWallet: string, senderAddress: string, receiverAddress: string, expectedTimeOfArrival: string) {
+export default async function createOrder(
+    receiverWallet: string,
+    senderAddress: string,
+    receiverAddress: string,
+    expectedTimeOfArrival: string
+): Promise<string> {
     const config = await initializeBlockchain();
     const wallet = Cookies.get("walletHash");
     let deliveryContract = new Contract(config.deliveryABI, config.deliveryAddress);
@@ -20,27 +25,41 @@ export default async function createOrder(receiverWallet: string, senderAddress:
 
     const date = new Date(expectedTimeOfArrival);
     const timestampInSeconds = Math.floor(date.getTime() / 1000);
-    deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)
-    try {
-        const result = await deliveryContract.methods.createOrder(receiverWallet, srcLat, srcLng, destLat, destLng, timestampInSeconds)
-            .send({ from: wallet })
-            .then(function (createdOrder: any) {
-                const orderID:string = createdOrder.blockHash
-                const iotOrder:CreateIotOrderDto ={
-                    id: createdOrder.blockHash,
-                    senderWallet: wallet,
-                    receiverWallet: receiverWallet,
-                    senderAddress: senderAddress,
-                    receiverAddress: receiverAddress,
-                    receiverAddrLat: destLat,
-                    receiverAddrLng: destLng,
-                    expectedTime: date,
-                }
-                const iotReturn = createIotOrder(iotOrder);
 
-                console.log('then', iotReturn);
-            });
+    try {
+        const createdOrder = await deliveryContract.methods
+            .createOrder(
+                receiverWallet,
+                srcLat,
+                srcLng,
+                destLat,
+                destLng,
+                timestampInSeconds
+            )
+            .send({ from: wallet });
+
+        const orderID: string = createdOrder.blockHash;
+
+        const iotOrder: CreateIotOrderDto = {
+            id: createdOrder.blockHash,
+            senderWallet: wallet,
+            receiverWallet: receiverWallet,
+            senderAddress: senderAddress,
+            receiverAddress: receiverAddress,
+            receiverAddrLat: destLat,
+            receiverAddrLng: destLng,
+            expectedTime: date,
+        };
+
+        try {
+            await createIotOrder(iotOrder);
+            return orderID;
+        } catch (error) {
+            console.log('error', error);
+            return ""; // ou algum valor padrão para indicar falha na criação do pedido IoT
+        }
     } catch (error) {
         console.log('error', error);
+        return ""; // ou algum valor padrão para indicar falha na criação do pedido de entrega
     }
 }

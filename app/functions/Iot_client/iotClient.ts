@@ -2,11 +2,13 @@ import axios from 'axios';
 import {CreateIotOrderDto} from '../dtos/iotClient.dto';
 import {Path} from "~/routes/components/Map";
 
-const BASE_URL = 'https://ship-track.fly.io'; // Lembrar de colocar isso no .env
+const BASE_URL = 'https://ship-track.fly.dev'; // Lembrar de colocar isso no .env
 
 export async  function getLocations(orderId: string) {
     try {
-        return await axios.get(`${BASE_URL}/locations/${orderId}`);
+        const response = await axios.get(`${BASE_URL}/locations/${orderId}`);
+        const locations: Path[] = response.data
+        return locations
     } catch(error: any) {
         return error.message;
     }

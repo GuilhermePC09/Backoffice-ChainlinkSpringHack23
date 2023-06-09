@@ -47,11 +47,11 @@ export default function TrackingPage() {
     }
 
     async function orderPath() {
-        const path:Path[] = await getLocations(selectedOrder)
+        const pathIot:any = await getLocations(selectedOrder)
+        console.log(pathIot)
         const info = await trackingInfo(selectedOrder);
-        console.log(info);
+        setPath(pathIot)
         setTrackingInfoDto(info);
-        setPath(path)
         setShowInfo(true);
     }
 

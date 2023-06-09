@@ -2,12 +2,13 @@ import {Link, useLocation} from "@remix-run/react";
 import Cookies from "js-cookie";
 import React, {useEffect, useState} from "react";
 import createOrder from "~/functions/contracts/create_order";
-import trackingInfo from "~/functions/contracts/tracking_info";
-import {CreateIotOrderDto} from "~/functions/dtos/iotClient.dto";
+
 export default function CreateOrderForm() {
     const { pathname } = useLocation();
     const [cookieValue, setCookieValue] = useState(Cookies.get("walletHash"));
-    const [apiResponse, setApiResponse] = useState<any | null>(null);
+    const [creationStatus, setCreationStatus] = useState("")
+    const [createdOrderHash, setCreatedOrderHash] = useState("")
+
 
     useEffect(() => {
         setCookieValue(Cookies.get("walletHash"));
@@ -33,11 +34,13 @@ export default function CreateOrderForm() {
         const estimatedDeliveryDate = formData.get("estimated-delivery-date") as unknown as any;
 
         try {
-            const response = await createOrder(receiverWallet, senderAdress, receiverAdress, estimatedDeliveryDate);
+            setCreationStatus("Loading")
 
-        } catch (error) {
-            console.log("err", error)
-            setApiResponse(JSON.stringify(error));
+            const response = await createOrder(receiverWallet, senderAdress, receiverAdress, estimatedDeliveryDate);
+            setCreatedOrderHash(response)
+            setCreationStatus("Complete")
+        } catch (error:any) {
+            setCreationStatus(error.toString)
         }
     }
 
@@ -73,8 +76,10 @@ export default function CreateOrderForm() {
                             <label htmlFor="estimated-delivery-date"
                                    className="block mt-2 text-xs font-semibold text-white uppercase">Estimated Delivery Date</label>
                             <input id="estimated-delivery-date" type="date" name="estimated-delivery-date"
-                                   className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                   className="block w-full p-3 mb-5 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                    required/>
+                            <p className="text-sm mb-2 text-white">Creation Status: {creationStatus}</p>
+                            <p className="text-sm mb-5 text-white">Order Address: {createdOrderHash}</p>
                             <button
                                     type="submit"
                                     className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-indigo-500 shadow-lg focus:outline-none hover:bg-indigo-600 hover:shadow-none">
@@ -84,7 +89,6 @@ export default function CreateOrderForm() {
                                     className="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-red-500 shadow-lg focus:outline-none hover:bg-red-600 hover:shadow-none">
                                 <Link to="/tracking_page">Cancel</Link>
                             </button>
-                            {apiResponse && <span content={apiResponse} />}
                         </form>
                     </div>
                 </div>
