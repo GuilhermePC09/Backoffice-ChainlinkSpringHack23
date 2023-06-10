@@ -4,10 +4,15 @@ import {Path} from "~/routes/components/Map";
 
 const BASE_URL = 'https://ship-track.fly.dev'; // Lembrar de colocar isso no .env
 
-export async  function getLocations(orderId: string) {
+export async  function getLocations(orderId: string | undefined): Promise<Path[] | undefined> {
     try {
+        if(orderId === undefined) {
+            return
+        }
+
         const response = await axios.get(`${BASE_URL}/locations/${orderId}`);
         const locations: Path[] = response.data
+
         return locations
     } catch(error: any) {
         return error.message;

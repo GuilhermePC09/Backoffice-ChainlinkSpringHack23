@@ -2,7 +2,7 @@ import { useLocation } from "@remix-run/react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { getLocations } from "~/functions/Iot_client/iotClient";
-import { checkSenderOrders, check_orders } from "~/functions/contracts/check_orders";
+import { checkSenderOrders, checkReceiverOrders } from "~/functions/contracts/check_receiver_orders";
 import { confirmOrderDelivery } from "~/functions/contracts/confirm_delivery";
 import trackingInfo from "~/functions/contracts/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
@@ -16,7 +16,6 @@ export default function TrackingPage() {
     });
     const [showInfo, setShowInfo] = useState(false);
     const { pathname } = useLocation();
-    const [path, setPath] = useState<Path[]>([]);
     const [receiverOrderList, setReceiverOrderList] = useState<any>([]);
     const [selectedOrder, setSelectedOrder] = useState("");
     const [senderOrderList, setSenderOrderList] = useState<any>([]);
@@ -25,7 +24,7 @@ export default function TrackingPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const receiverOrders = await check_orders();
+            const receiverOrders = await checkReceiverOrders();
             setReceiverOrderList(receiverOrders);
 
             const senderOrders = await checkSenderOrders();
@@ -47,10 +46,7 @@ export default function TrackingPage() {
     }
 
     async function orderPath() {
-        const pathIot: any = await getLocations(selectedOrder)
-        console.log(pathIot)
         const info = await trackingInfo(selectedOrder);
-        setPath(pathIot)
         setTrackingInfoDto(info);
         setShowInfo(true);
     }
@@ -81,7 +77,7 @@ export default function TrackingPage() {
             <body>
                 <section className="text-gray-600 body-font relative">
                     <div className="fixed inset-0 bg-gray-300">
-                        <MyContextProvider value={path}>
+                        <MyContextProvider value={selectedOrder}>
                             <TrackMap />
                         </MyContextProvider>
                     </div>

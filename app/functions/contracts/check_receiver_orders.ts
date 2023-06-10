@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 
 
-export const check_orders = async () => {
+export const checkReceiverOrders = async () => {
     const config = await initializeBlockchain();
     // 'Web3.givenProvider' will be set if in an Ethereum supported browser.
     const wallet = Cookies.get("walletHash");

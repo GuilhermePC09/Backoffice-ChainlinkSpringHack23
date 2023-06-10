@@ -14,7 +14,7 @@ function convertUnixTimestampToString(timestamp: number): string {
     return `${month}/${day}/${year}`;
 }
 
-export default async function trackingInfo(orderAddress:string): Promise<TrackingInfoDto> {
+export default async function trackingInfo(orderAddress:string | undefined): Promise<TrackingInfoDto> {
     const config = await initializeBlockchain();
     const orderABI = order as AbiItem[];
     const wallet = Cookies.get("walletHash");

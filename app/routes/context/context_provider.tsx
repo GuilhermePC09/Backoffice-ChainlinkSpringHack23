@@ -1,10 +1,10 @@
 import React from "react";
 import {Path} from "~/routes/components/Map";
 
-const MyContext = React.createContext<Path[] | undefined>(undefined);
+const MyContext = React.createContext<string | undefined>(undefined);
 
 type MyContextProviderProps = {
-    value: Path[];
+    value: string;
     children: React.ReactNode;
 };
 
