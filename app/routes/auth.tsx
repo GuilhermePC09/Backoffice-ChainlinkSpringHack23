@@ -54,7 +54,8 @@ export default function Auth() {
                     className="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white"
                 >
                     <section className="flex w-[30rem] flex-col space-y-10">
-                        <div className="text-center text-4xl font-medium">Sign in</div>
+                        <img src="/shipchain.png" alt="Shipchain logo" className="mx-auto" />
+                        <div className="text-center text-4xl font-medium">Shipchain</div>
                         <button onClick={authenticate} className="transform rounded-sm bg-indigo-500 py-2 duration-300 hover:bg-indigo-600">
                             <span className="relative text-white">
                                 {authenticated ? "Go to your orders" : "Connect Wallet"}
