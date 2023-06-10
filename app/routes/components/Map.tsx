@@ -61,6 +61,7 @@ export default function TrackMap() {
 
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={center} onLoad={onLoad} onUnmount={onUnmount}>
+            {path && <Marker position={path[0]} />}
             {path && <Marker position={center} />}
             {path && <Polyline path={path} options={options} />}
         </GoogleMap>
