@@ -22,12 +22,16 @@ export default async function trackingInfo(orderAddress:string | undefined): Pro
 
     let sender = await orderContract.methods.sender().call();
     let expectedDate = await orderContract.methods.expectedTimeOfArrival().call();
+    let senderLocation = await orderContract.methods.sourceLocation().call();
+    let receiverLocation = await orderContract.methods.destinationLocation().call();
 
     const senderString = sender.toString();
     const dateString = convertUnixTimestampToString(expectedDate);
 
     return {
         sender: senderString,
-        expectedDeliveryDate: dateString
+        expectedDeliveryDate: dateString,
+        senderLocation: senderLocation,
+        receiverLocation: receiverLocation,
     };
 }

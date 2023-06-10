@@ -37,7 +37,9 @@ export default function TrackMap() {
 
     const [path, setPath] = useState<Path[]>([]);
     const [center, setCenter] = useState<Path>({ lat: 0, lng: 0 });
-    const [info, setInfo] = useState<TrackingInfoDto | undefined >()
+    const [info, setInfo] = useState<TrackingInfoDto | undefined>();
+    const [sourceLocation, setSourceLocation] = useState<Path>({ lat: 0, lng: 0 });
+    const [destinationLocation, setDestinationLocation] = useState<Path>({ lat: 0, lng: 0 });
 
     useEffect(() => {
         async function fetchLocations() {
@@ -47,9 +49,12 @@ export default function TrackMap() {
                     setPath(locations);
                     setCenter(locations[locations.length - 1]);
                 }
-                const info = await trackingInfo(orderHash);
-                setInfo(info);
-
+                const trackingInfoData = await trackingInfo(orderHash);
+                setInfo(trackingInfoData);
+                if (trackingInfoData?.senderLocation !== undefined && trackingInfoData?.receiverLocation !== undefined) {
+                    setSourceLocation(trackingInfoData.senderLocation);
+                    setDestinationLocation(trackingInfoData.receiverLocation);
+                }
             } catch (error) {
                 console.error('Failed to fetch locations:', error);
             }
@@ -59,7 +64,6 @@ export default function TrackMap() {
 
     const [map, setMap] = useState(null);
 
-    // @ts-ignore
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);
@@ -76,8 +80,8 @@ export default function TrackMap() {
 
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={center} onLoad={onLoad} onUnmount={onUnmount}>
-            {/*<Marker position={info?.senderLocation} />*/}
-            {/*<Marker position={info?.receiverLocation} />*/}
+            {sourceLocation.lat !== 0 && sourceLocation.lng !== 0 && <Marker position={sourceLocation} />}
+            {destinationLocation.lat !== 0 && destinationLocation.lng !== 0 && <Marker position={destinationLocation} />}
             {path.length > 0 && <Marker position={center} />}
             {path.length > 0 && <Polyline path={path} options={options} />}
         </GoogleMap>
