@@ -46,6 +46,8 @@ export default async function createOrder(
             senderWallet: wallet,
             receiverWallet: receiverWallet,
             senderAddress: senderAddress,
+            senderAddrLat: srcLat,
+            senderAddrLng: srcLng,
             receiverAddress: receiverAddress,
             receiverAddrLat: destLat,
             receiverAddrLng: destLng,

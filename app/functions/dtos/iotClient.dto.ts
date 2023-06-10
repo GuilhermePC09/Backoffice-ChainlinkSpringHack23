@@ -3,6 +3,8 @@ export interface CreateIotOrderDto {
     senderWallet: string | undefined;
     receiverWallet: string;
     senderAddress: string;
+    senderAddrLat: number;
+    senderAddrLng: number;
     receiverAddress: string;
     expectedTime: Date;
     receiverAddrLat: number,
