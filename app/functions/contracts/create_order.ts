@@ -1,8 +1,8 @@
-import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import Cookies from "js-cookie";
 import Contract from "web3-eth-contract";
-import getLatLng from "~/functions/contracts/get_LatLng";
 import { createIotOrder } from "~/functions/Iot_client/iotClient";
+import getLatLng from "~/functions/contracts/get_LatLng";
+import initializeBlockchain from "~/functions/contracts/initialize_blockchain";
 import { CreateIotOrderDto } from "~/functions/dtos/iotClient.dto";
 
 export default async function createOrder(
@@ -38,10 +38,11 @@ export default async function createOrder(
             )
             .send({ from: wallet });
 
-        const orderID: string = createdOrder.blockHash;
+        console.log('createdOrder:', createdOrder)
+        const orderID: string = createdOrder.events.OrderCreated.returnValues[0];
 
         const iotOrder: CreateIotOrderDto = {
-            id: createdOrder.blockHash,
+            id: orderID,
             senderWallet: wallet,
             receiverWallet: receiverWallet,
             senderAddress: senderAddress,
