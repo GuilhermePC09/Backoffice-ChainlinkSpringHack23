@@ -22,7 +22,7 @@ export default function TrackMap() {
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyDM9y8YCKfW_v0j0iBvPHe9bOyZFtkB1DU',
     });
-    const options = {
+    const polylineOptions = {
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -35,6 +35,20 @@ export default function TrackMap() {
         radius: 30000,
         zIndex: 1,
     };
+
+    const sourceMarker = {
+        path: 'M 0,0 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0',
+        fillColor: 'purple',
+        fillOpacity: 0.8,
+        scale: 1,
+    }
+
+    const deliveryMarker = {
+        path: 'M 0,0 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0',
+        fillColor: 'green',
+        fillOpacity: 0.8,
+        scale: 1,
+    }
 
     const [path, setPath] = useState<Path[]>([]);
     const [center, setCenter] = useState<Path>({ lat: 0, lng: 0 });
@@ -79,12 +93,14 @@ export default function TrackMap() {
         return null;
     }
 
+
+
     return (
         <GoogleMap mapContainerStyle={containerStyle} center={center} onLoad={onLoad} onUnmount={onUnmount}>
-            {sourceLocation.lat !== 0 && sourceLocation.lng !== 0 && <Marker position={sourceLocation} />}
-            {destinationLocation.lat !== 0 && destinationLocation.lng !== 0 && <Marker position={destinationLocation} />}
+            {sourceLocation.lat !== 0 && sourceLocation.lng !== 0 && <Marker position={sourceLocation} icon={sourceMarker}/>}
+            {destinationLocation.lat !== 0 && destinationLocation.lng !== 0 && <Marker position={destinationLocation} icon={deliveryMarker} />}
             {path.length > 0 && <Marker position={center} />}
-            {path.length > 0 && <Polyline path={path} options={options} />}
+            {path.length > 0 && <Polyline path={path} options={polylineOptions} />}
         </GoogleMap>
     );
 }
