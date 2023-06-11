@@ -20,13 +20,17 @@ export default async function trackingInfo(orderAddress:string | undefined): Pro
     const wallet = Cookies.get("walletHash");
     let orderContract = new Contract(orderABI, orderAddress);
 
-    let sender = await orderContract.methods.sender().call();
-    let expectedDate = await orderContract.methods.expectedTimeOfArrival().call();
-    let senderLocation = await orderContract.methods.sourceLocation().call();
-    let receiverLocation = await orderContract.methods.destinationLocation().call();
+    const sender = await orderContract.methods.sender().call();
+    const expectedDate = await orderContract.methods.expectedTimeOfArrival().call();
+    const senderLocation = await orderContract.methods.sourceLocation().call();
+    const receiverLocation = await orderContract.methods.destinationLocation().call();
+
 
     const senderString = sender.toString();
     const dateString = convertUnixTimestampToString(expectedDate);
+
+    console.log(senderLocation);
+    console.log(receiverLocation);
 
     return {
         sender: senderString,

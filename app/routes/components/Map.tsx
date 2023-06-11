@@ -5,6 +5,7 @@ import { getLocations } from "~/functions/Iot_client/iotClient";
 import trackingInfo from "~/functions/contracts/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 
+
 const containerStyle = {
     width: '100vw',
     height: '100vh',
@@ -64,6 +65,7 @@ export default function TrackMap() {
 
     const [map, setMap] = useState(null);
 
+    // @ts-ignore
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);

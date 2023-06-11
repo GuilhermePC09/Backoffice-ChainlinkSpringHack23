@@ -1,4 +1,3 @@
-
 export default interface TrackingInfoDto {
     sender: string,
     expectedDeliveryDate: string,
@@ -6,7 +5,7 @@ export default interface TrackingInfoDto {
     receiverLocation: Position,
 }
 
-type Position={
+export type Position ={
     lat: number,
     lng: number
-}
+};
