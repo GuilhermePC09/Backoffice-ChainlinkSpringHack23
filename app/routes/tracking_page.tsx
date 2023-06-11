@@ -53,13 +53,11 @@ export default function TrackingPage() {
 
     async function confirmDelivery() {
         const confirmation = await confirmOrderDelivery(selectedOrder);
-        console.log(confirmation)
     }
 
     // @ts-ignore
     function handleOrderChange(event) {
         const selectedValue = event.target.value;
-        console.log(selectedValue)
         setSelectedOrder(selectedValue);
     }
 
@@ -67,7 +65,6 @@ export default function TrackingPage() {
         window.location.href = "/create_order_form";
     }
 
-    // @ts-ignore
     return (
         <html lang="en">
             <head>
