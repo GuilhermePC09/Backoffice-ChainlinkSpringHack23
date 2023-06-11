@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { GoogleMap, Marker, Polyline, useJsApiLoader } from '@react-google-maps/api';
-import { MyContext } from '~/routes/context/context_provider';
+import { getBoundsOfDistance } from "geolib";
+import React, { useContext, useEffect, useState } from 'react';
 import { getLocations } from "~/functions/Iot_client/iotClient";
 import trackingInfo from "~/functions/contracts/tracking_info";
-import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
-import {getBoundsOfDistance} from "geolib";
+import { MyContext } from '~/routes/context/context_provider';
 
 
 const containerStyle = {
@@ -22,6 +21,7 @@ export default function TrackMap() {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: 'AIzaSyDM9y8YCKfW_v0j0iBvPHe9bOyZFtkB1DU',
+        libraries: ['places'],
     });
     const polylineOptions = {
         strokeColor: '#FF0000',
