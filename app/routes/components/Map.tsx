@@ -4,6 +4,7 @@ import { MyContext } from '~/routes/context/context_provider';
 import { getLocations } from "~/functions/Iot_client/iotClient";
 import trackingInfo from "~/functions/contracts/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
+import {getBoundsOfDistance} from "geolib";
 
 
 const containerStyle = {
@@ -52,24 +53,30 @@ export default function TrackMap() {
 
     const [path, setPath] = useState<Path[]>([]);
     const [center, setCenter] = useState<Path>({ lat: 0, lng: 0 });
-    const [info, setInfo] = useState<TrackingInfoDto | undefined>();
     const [sourceLocation, setSourceLocation] = useState<Path>({ lat: 0, lng: 0 });
     const [destinationLocation, setDestinationLocation] = useState<Path>({ lat: 0, lng: 0 });
 
     useEffect(() => {
         async function fetchLocations() {
             try {
+                const trackingInfoData = await trackingInfo(orderHash);
+                if (trackingInfoData?.senderLocation !== undefined && trackingInfoData?.receiverLocation !== undefined) {
+                    setSourceLocation(trackingInfoData.senderLocation);
+                    setDestinationLocation(trackingInfoData.receiverLocation);
+                    setCenter(trackingInfoData.senderLocation)
+                }
                 const locations = await getLocations(orderHash);
                 if (locations) {
                     setPath(locations);
                     setCenter(locations[locations.length - 1]);
                 }
-                const trackingInfoData = await trackingInfo(orderHash);
-                setInfo(trackingInfoData);
-                if (trackingInfoData?.senderLocation !== undefined && trackingInfoData?.receiverLocation !== undefined) {
-                    setSourceLocation(trackingInfoData.senderLocation);
-                    setDestinationLocation(trackingInfoData.receiverLocation);
-                }
+                // @ts-ignore
+                const onLoad = React.useCallback(function callback(map) {
+                    const bounds = getBoundsOfDistance(center, 10000);
+                    map.fitBounds(bounds);
+                    map.panToBounds(bounds);
+                    setMap(map);
+                }, [center]);
             } catch (error) {
                 console.error('Failed to fetch locations:', error);
             }
@@ -79,6 +86,7 @@ export default function TrackMap() {
 
     const [map, setMap] = useState(null);
 
+    // @ts-ignore
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);
