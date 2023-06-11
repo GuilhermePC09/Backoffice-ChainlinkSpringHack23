@@ -1,12 +1,11 @@
 import { useLocation } from "@remix-run/react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { getLocations } from "~/functions/Iot_client/iotClient";
-import { checkSenderOrders, checkReceiverOrders } from "~/functions/contracts/check_receiver_orders";
+import { checkReceiverOrders, checkSenderOrders } from "~/functions/contracts/check_receiver_orders";
 import { confirmOrderDelivery } from "~/functions/contracts/confirm_delivery";
 import trackingInfo from "~/functions/contracts/tracking_info";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
-import TrackMap, { Path } from "~/routes/components/Map";
+import TrackMap from "~/routes/components/Map";
 import { MyContextProvider } from "~/routes/context/context_provider";
 
 export default function TrackingPage() {
