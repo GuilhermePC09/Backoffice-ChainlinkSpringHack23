@@ -65,7 +65,6 @@ export default function TrackMap() {
 
     const [map, setMap] = useState(null);
 
-    // @ts-ignore
     const onLoad = React.useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);

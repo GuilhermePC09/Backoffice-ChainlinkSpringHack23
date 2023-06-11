@@ -1,11 +1,9 @@
+import {Path} from "~/routes/components/Map";
+
 export default interface TrackingInfoDto {
     sender: string,
     expectedDeliveryDate: string,
-    senderLocation: Position,
-    receiverLocation: Position,
+    senderLocation: Path,
+    receiverLocation: Path,
 }
 
-export type Position ={
-    lat: number,
-    lng: number
-};

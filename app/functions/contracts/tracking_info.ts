@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import TrackingInfoDto from "~/functions/dtos/trackingInfoDto";
 import order from "~/contracts/order.json";
 import {AbiItem} from "web3-utils";
+import {Path} from "~/routes/components/Map";
 
 function convertUnixTimestampToString(timestamp: number): string {
     const date = new Date(timestamp * 1000);
@@ -28,14 +29,27 @@ export default async function trackingInfo(orderAddress:string | undefined): Pro
 
     const senderString = sender.toString();
     const dateString = convertUnixTimestampToString(expectedDate);
+    const srcLat = senderLocation.latitude / 1000000;
+    const srcLng = senderLocation.longitude / 1000000;
+    const destLat = receiverLocation.latitude  / 1000000;
+    const destLng = receiverLocation.longitude / 1000000;
 
-    console.log(senderLocation);
-    console.log(receiverLocation);
+    const convertedSourceLocation: Path  = {
+        lat: srcLat,
+        lng: srcLng,
+    }
+    const convertedDestinationLocation: Path  = {
+        lat: destLat,
+        lng: destLng,
+    }
+
+    console.log(convertedSourceLocation)
+    console.log(convertedDestinationLocation)
 
     return {
         sender: senderString,
         expectedDeliveryDate: dateString,
-        senderLocation: senderLocation,
-        receiverLocation: receiverLocation,
+        senderLocation: convertedSourceLocation,
+        receiverLocation: convertedDestinationLocation,
     };
 }
