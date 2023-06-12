@@ -5,23 +5,6 @@ import { authentication } from "~/functions/contracts/auth";
 
 export const meta: V2_MetaFunction = () => [{ title: "shipchain • Track and automate deliveries all around the world", description: "Automate the shipping process of delivering any kind of package in the real world. The smart contract gathers location data from IoT devices and stores it in the blockchain." }];
 
-// Loaders only run on the server and provide data
-// to your component on GET requests
-export const loader = async ({ request }: LoaderArgs) => {
-    return null;
-};
-
-// Actions only run on the server and handle POST
-// PUT, PATCH, and DELETE. They can also provide data
-// to the component
-export async function action({ request }: ActionArgs) {
-    return null;
-}
-
-// The default export is the component that will be
-// rendered when a route matches the URL. This runs
-// both on the server and the client
-
 export default function Auth() {
     const [authenticated, setAuthenticated] = useState(false);
 
@@ -34,7 +17,7 @@ export default function Auth() {
 
         const hash = await authentication();
 
-        const expiresMinutes = 60; // Duração em minutos
+        const expiresMinutes = 60; // minutes
 
         const expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + expiresMinutes * 60 * 1000);
