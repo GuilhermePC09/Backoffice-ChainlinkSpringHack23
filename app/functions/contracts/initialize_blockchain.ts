@@ -2,6 +2,7 @@ import Web3 from "web3";
 import Contract from "web3-eth-contract";
 import { AbiItem } from "web3-utils";
 import delivery from "~/contracts/delivery.json";
+import order from "~/contracts/order.json";
 import BlockChainConfigDto from "~/functions/dtos/blockChainConfig.dto";
 
 const DELIVERY_CONTRACT_ADDRESS = "0x12B50cbD48F814299FcF6782159025427d60E7b8"
@@ -16,8 +17,7 @@ export default async function initializeBlockchain(): Promise<BlockChainConfigDt
     // connect to the library contract
 
     const deliveryABI = delivery as AbiItem[];
-
-    // const orderABI = order as AbiItem[];
+    const orderABI = order as AbiItem[];
     // const orderAddress = "0x0f3a3Bc2b56AD73EeD6b574bAE99bfeA83606564"
 
     return {
@@ -25,6 +25,7 @@ export default async function initializeBlockchain(): Promise<BlockChainConfigDt
         web3,
         deliveryABI,
         deliveryAddress: DELIVERY_CONTRACT_ADDRESS,
+        orderABI
     };
 
 }
